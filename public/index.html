@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Parecer Descritivo LDB</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Parecer Descritivo conforme a LDB</h1>
+    <form id="parecer-form">
+      <label for="nome">Nome do aluno:</label>
+      <input type="text" id="nome" name="nome" required>
+
+      <label for="turma">Turma:</label>
+      <input type="text" id="turma" name="turma" required>
+
+      <label for="escola">Escola:</label>
+      <input type="text" id="escola" name="escola" required>
+
+      <label for="apoio">Observações/Questões principais:</label>
+      <textarea id="apoio" name="apoio" rows="4" required placeholder="Ex: dificuldades, avanços, comportamento, etc."></textarea>
+
+      <button type="submit">Gerar Parecer</button>
+    </form>
+    <div id="resultado" class="resultado"></div>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
