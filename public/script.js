@@ -1,3 +1,9 @@
+// Determina a URL base para a API. Quando o HTML é aberto via file://,
+// window.location.origin é "null" e precisamos apontar para o servidor local.
+const API_BASE = window.location.origin === 'null'
+  ? 'http://localhost:3000'
+  : window.location.origin;
+
 document.getElementById('parecerform').addEventListener('submit', async function (e) {
   e.preventDefault();
 
@@ -14,7 +20,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
   resultadoDiv.innerHTML = '<p>Gerando parecer, aguarde...</p>';
 
   try {
-    const response = await fetch('/api/parecer', {
+    const response = await fetch(`${API_BASE}/api/parecer`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ nome, turma, escola, professora, turno, data, anoLetivo, apoio })
