@@ -20,6 +20,8 @@ Gere pareceres descritivos para alunos conforme a LDB, usando a API do ChatGPT/O
    npm start
    ```
    O sistema estará disponível em [http://localhost:3000](http://localhost:3000).
+    Não abra o arquivo `index.html` diretamente, utilize essa URL para garantir
+    que as requisições ao backend funcionem corretamente.
 
 5. **Acesse pelo navegador:**
     Preencha os dados do aluno e as observações.

@@ -79,6 +79,7 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
     const parecer = response.data.choices[0].message.content.trim();
     res.json({ parecer });
   } catch (error) {
+    console.error('Erro ao chamar a OpenAI:', error.message);
     res.status(500).json({ error: 'Erro ao gerar parecer. Verifique sua chave da OpenAI e tente novamente.' });
   }
 });
