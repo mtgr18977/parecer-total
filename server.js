@@ -1,14 +1,20 @@
 require('dotenv').config();
-console.log('OPENAI_API_KEY:', process.env.OPENAI_API_KEY);
 const express = require('express');
 const axios = require('axios');
 const path = require('path');
+const cors = require('cors');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+if (!process.env.OPENAI_API_KEY) {
+  console.warn('Aviso: OPENAI_API_KEY não configurada. O endpoint /api/parecer retornará erro.');
+}
+
 // Middleware para ler JSON
 app.use(express.json());
+// Habilitar CORS para permitir requisições de outras origens
+app.use(cors());
 
 // Servir arquivos estáticos do frontend
 app.use(express.static(path.join(__dirname, 'public')));
