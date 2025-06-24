@@ -12,6 +12,12 @@ module.exports = async (req, res) => {
     return;
   }
 
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    res.status(500).json({ error: 'OPENAI_API_KEY não configurada.' });
+    return;
+  }
+
   try {
     const prompt = `
 Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, conforme a LDB, considerando as seguintes observações: ${apoio}
@@ -21,7 +27,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
-        model: 'gpt3.5turbo',
+        model: 'gpt-3.5-turbo',
         messages: [
           { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
           { role: 'user', content: prompt }
@@ -31,7 +37,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
       },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         }
       }
