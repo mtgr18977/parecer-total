@@ -1,4 +1,4 @@
-document.getElementById('parecer-form').addEventListener('submit', async function (e) {
+document.getElementById('parecerEmpateform').addEventListener('submit', async function (e) {
   e.preventDefault();
 
   const nome = document.getElementById('nome').value.trim();
@@ -12,7 +12,7 @@ document.getElementById('parecer-form').addEventListener('submit', async functio
   try {
     const response = await fetch('/api/parecer', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'ContentEmpateType': 'application/json' },
       body: JSON.stringify({ nome, turma, escola, apoio })
     });
 

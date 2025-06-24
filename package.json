@@ -1,5 +1,5 @@
 {
-  "name": "parecer-ldb",
+  "name": "parecerEmpateldb",
   "version": "1.0.0",
   "description": "Gerador de pareceres descritivos conforme a LDB usando OpenAI",
   "main": "server.js",

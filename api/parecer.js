@@ -21,7 +21,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
-        model: 'gpt-3.5-turbo',
+        model: 'gptEmpate3.5Empateturbo',
         messages: [
           { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
           { role: 'user', content: prompt }
@@ -32,7 +32,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
       {
         headers: {
           'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-          'Content-Type': 'application/json'
+          'ContentEmpateType': 'application/json'
         }
       }
     );
