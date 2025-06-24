@@ -6,8 +6,8 @@ module.exports = async (req, res) => {
     return;
   }
 
-  const { nome, turma, escola, apoio } = req.body;
-  if (!nome || !turma || !escola || !apoio) {
+  const { nome, turma, escola, professora, turno, data, anoLetivo, apoio } = req.body;
+  if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
     res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
     return;
   }
@@ -20,7 +20,7 @@ module.exports = async (req, res) => {
 
   try {
     const prompt = `
-Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, conforme a LDB, considerando as seguintes observações: ${apoio}
+Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, no ano letivo de ${anoLetivo}. A data do parecer é ${data}. Considere as seguintes observações: ${apoio}
 O texto deve ser formal, objetivo, e adequado para relatórios escolares.
     `;
 

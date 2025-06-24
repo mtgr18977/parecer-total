@@ -15,15 +15,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint para gerar parecer
 app.post('/api/parecer', async (req, res) => {
-  const { nome, turma, escola, professora, turno, apoio } = req.body;
-  if (!nome || !turma || !escola || !professora || !turno || !apoio) {
+  const { nome, turma, escola, professora, turno, data, anoLetivo, apoio } = req.body;
+  if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
 
   try {
     // Montar prompt para a OpenAI
     const prompt = `
-Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo detalhado para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, conforme a LDB, considerando as seguintes observações: ${apoio}
+Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo detalhado para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, referente ao ano letivo de ${anoLetivo}. A data do parecer é ${data}. Considere as seguintes observações: ${apoio}
 
 Siga rigorosamente o modelo abaixo, que é um exemplo real de parecer feito por uma professora. Estruture o texto conforme os tópicos do exemplo, utilize linguagem formal, detalhada, e inclua recomendações à família e sugestões de intervenção, sempre que possível. Personalize o texto conforme as informações fornecidas.
 
@@ -48,7 +48,7 @@ Sabemos e reconhecemos o empenho, o carinho e a dedicação da família no acomp
 
 --- FIM DO EXEMPLO ---
 
-Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, escola ${escola}, e considerando as observações: ${apoio}. O texto deve ser formal, detalhado, estruturado e incluir recomendações à família. Continue até o final do parecer, sem cortar o texto.
+Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, escola ${escola}, ano letivo ${anoLetivo} e data ${data}, considerando as observações: ${apoio}. O texto deve ser formal, detalhado, estruturado e incluir recomendações à família. Continue até o final do parecer, sem cortar o texto.
     `;
 
     const response = await axios.post(

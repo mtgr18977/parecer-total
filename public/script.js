@@ -6,6 +6,8 @@ document.getElementById('parecerform').addEventListener('submit', async function
   const escola = document.getElementById('escola').value.trim();
   const professora = document.getElementById('professora').value.trim();
   const turno = document.getElementById('turno').value;
+  const data = document.getElementById('data').value;
+  const anoLetivo = document.getElementById('ano-letivo').value.trim();
   const apoio = document.getElementById('apoio').value.trim();
   const resultadoDiv = document.getElementById('resultado');
 
@@ -15,7 +17,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
     const response = await fetch('/api/parecer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, turma, escola, professora, turno, apoio })
+      body: JSON.stringify({ nome, turma, escola, professora, turno, data, anoLetivo, apoio })
     });
 
     const data = await response.json();
