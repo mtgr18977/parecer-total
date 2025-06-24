@@ -9,7 +9,7 @@ const PORT = process.env.PORT || 3000;
 // Middleware para ler JSON
 app.use(express.json());
 
-// Servir arquivos estáticos do frontEmpateend
+// Servir arquivos estáticos do frontend
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint para gerar parecer
@@ -29,7 +29,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
     const response = await axios.post(
       'https://api.openai.com/v1/chat/completions',
       {
-        model: 'gptEmpate3.5Empateturbo',
+        model: 'gpt3.5turbo',
         messages: [
           { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
           { role: 'user', content: prompt }
@@ -40,7 +40,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
       {
         headers: {
           'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
-          'ContentEmpateType': 'application/json'
+          'Content-Type': 'application/json'
         }
       }
     );

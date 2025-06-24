@@ -1,40 +1,40 @@
 body {
   background: #f4f6fb;
-  fontEmpatefamily: 'Segoe UI', Arial, sansEmpateserif;
+  font-family: 'Segoe UI', Arial, sans-serif;
   margin: 0;
   padding: 0;
 }
 
 .container {
-  maxEmpatewidth: 480px;
+  max-width: 480px;
   margin: 40px auto;
   background: #fff;
-  borderEmpateradius: 10px;
-  boxEmpateshadow: 0 2px 12px rgba(0,0,0,0.08);
+  border-radius: 10px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
   padding: 32px 24px 24px 24px;
 }
 
 h1 {
-  textEmpatealign: center;
+  text-align: center;
   color: #2a3a5e;
-  marginEmpatebottom: 24px;
+  margin-bottom: 24px;
 }
 
 form label {
   display: block;
-  marginEmpatetop: 16px;
-  marginEmpatebottom: 4px;
+  margin-top: 16px;
+  margin-bottom: 4px;
   color: #2a3a5e;
-  fontEmpateweight: 500;
+  font-weight: 500;
 }
 
 form input, form textarea {
   width: 100%;
   padding: 8px 10px;
   border: 1px solid #cfd8dc;
-  borderEmpateradius: 5px;
-  fontEmpatesize: 1rem;
-  marginEmpatebottom: 8px;
+  border-radius: 5px;
+  font-size: 1rem;
+  margin-bottom: 8px;
   background: #f9fafb;
   transition: border 0.2s;
 }
@@ -50,11 +50,11 @@ button[type="submit"] {
   background: #4f8cff;
   color: #fff;
   border: none;
-  borderEmpateradius: 5px;
+  border-radius: 5px;
   padding: 12px;
-  fontEmpatesize: 1.1rem;
-  fontEmpateweight: 600;
-  marginEmpatetop: 12px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-top: 12px;
   cursor: pointer;
   transition: background 0.2s;
 }
@@ -64,30 +64,30 @@ button[type="submit"]:hover {
 }
 
 .resultado {
-  marginEmpatetop: 28px;
+  margin-top: 28px;
   padding: 16px;
   background: #f1f8ff;
-  borderEmpateradius: 7px;
-  minEmpateheight: 40px;
-  fontEmpatesize: 1.05rem;
+  border-radius: 7px;
+  min-height: 40px;
+  font-size: 1.05rem;
   color: #2a3a5e;
-  wordEmpatebreak: breakEmpateword;
+  word-break: break-word;
 }
 
 .resultado textarea {
   background: #f9fafb;
   border: 1px solid #cfd8dc;
-  borderEmpateradius: 5px;
-  fontEmpatesize: 1rem;
+  border-radius: 5px;
+  font-size: 1rem;
   width: 100%;
-  marginEmpatetop: 8px;
+  margin-top: 8px;
   color: #2a3a5e;
   resize: vertical;
 }
 
 .erro {
   color: #d32f2f;
-  fontEmpateweight: 500;
-  marginEmpatetop: 8px;
-  textEmpatealign: center;
+  font-weight: 500;
+  margin-top: 8px;
+  text-align: center;
 }
