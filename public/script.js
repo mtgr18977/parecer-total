@@ -17,6 +17,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
 
   try {
     console.log("Antes do fetch");
+    console.log("Valores:", { nome, turma, escola, professora, turno, data, anoLetivo, apoio });
     // Envia os dados do formulário para o servidor
     // usando a API fetch.
     const response = await fetch('/api/parecer', {
@@ -60,6 +61,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
       resultadoDiv.innerHTML = `<p class="erro">${data.error || 'Erro ao gerar parecer.'}</p>`;
     }
   } catch (err) {
+    console.error("Erro no fetch:", err);
     resultadoDiv.innerHTML = '<p class="erro">Erro de conexão com o servidor.</p>';
   }
 });
