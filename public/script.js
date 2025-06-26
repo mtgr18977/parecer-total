@@ -5,8 +5,10 @@ const API_BASE = window.location.origin === 'null'
   : window.location.origin;
 
 document.getElementById('parecerform').addEventListener('submit', async function (e) {
+  console.log('Formulário enviado');
+  // Previne o comportamento padrão do formulário
+  // para evitar recarregar a página.
   e.preventDefault();
-
   const nome = document.getElementById('nome').value.trim();
   const turma = document.getElementById('turma').value.trim();
   const escola = document.getElementById('escola').value.trim();
