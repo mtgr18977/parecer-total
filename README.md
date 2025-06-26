@@ -27,6 +27,10 @@ Gere pareceres descritivos para alunos conforme a LDB, usando a API do ChatGPT/O
     Preencha os dados do aluno e as observações.
     Clique em "Gerar Parecer" para obter o texto gerado.
 
+Se preferir, instale o aplicativo como PWA. No Chrome ou Safari móvel, toque em
+"Compartilhar" e depois em "Adicionar à Tela de Início". Assim ele funcionará
+como um app independente e até mesmo offline.
+
 
 
 ## Como hospedar na Vercel
