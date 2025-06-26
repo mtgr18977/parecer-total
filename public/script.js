@@ -16,6 +16,9 @@ document.getElementById('parecerform').addEventListener('submit', async function
   resultadoDiv.innerHTML = '<p>Gerando parecer, aguarde...</p>';
 
   try {
+    console.log("Antes do fetch");
+    // Envia os dados do formulário para o servidor
+    // usando a API fetch.
     const response = await fetch('/api/parecer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
