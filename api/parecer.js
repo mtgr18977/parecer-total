@@ -32,7 +32,7 @@ O texto deve ser formal, objetivo, e adequado para relatórios escolares.
           { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
           { role: 'user', content: prompt }
         ],
-        max_tokens: 400,
+        max_tokens: 2048,
         temperature: 0.7
       },
       {
