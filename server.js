@@ -5,7 +5,7 @@ const path = require('path');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 12000;
 
 if (!process.env.OPENAI_API_KEY) {
   console.warn('Aviso: OPENAI_API_KEY não configurada. O endpoint /api/parecer retornará erro.');
@@ -13,6 +13,8 @@ if (!process.env.OPENAI_API_KEY) {
 
 // Middleware para ler JSON
 app.use(express.json());
+// Configurar urlencoded com extended: true para manter compatibilidade
+app.use(express.urlencoded({ extended: true }));
 // Habilitar CORS para permitir requisições de outras origens
 app.use(cors());
 
@@ -85,6 +87,10 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
 });
 
 // Iniciar servidor
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', (error) => {
+  if (error) {
+    console.error('Erro ao iniciar o servidor:', error);
+    return;
+  }
   console.log(`Servidor rodando em http://localhost:${PORT}`);
 });
