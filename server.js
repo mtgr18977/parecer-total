@@ -25,6 +25,10 @@ app.post('/api/parecer', async (req, res) => {
   if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
+  const apiKey = process.env.OPENAI_API_KEY;
+  if (!apiKey) {
+    return res.status(500).json({ error: 'OPENAI_API_KEY não configurada.' });
+  }
 
   try {
     // Montar prompt para a OpenAI
@@ -70,7 +74,7 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
       },
       {
         headers: {
-          'Authorization': `Bearer ${process.env.OPENAI_API_KEY}`,
+          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         }
       }
@@ -79,7 +83,7 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
     const parecer = response.data.choices[0].message.content.trim();
     res.json({ parecer });
   } catch (error) {
-    console.error('Erro ao chamar a OpenAI:', error.message);
+    console.error('Erro ao chamar a OpenAI:', error.response?.data || error.message);
     res.status(500).json({ error: 'Erro ao gerar parecer. Verifique sua chave da OpenAI e tente novamente.' });
   }
 });
