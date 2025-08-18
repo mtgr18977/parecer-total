@@ -4,6 +4,8 @@ const ASSETS = [
   '/index.html',
   '/style.css',
   '/script.js',
+  '/ionic/ionic.css',
+  '/ionic/ionic.esm.js',
   '/manifest.json',
   '/offline.html'
 ];
