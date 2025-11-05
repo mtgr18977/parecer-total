@@ -62,7 +62,7 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
     `;
 
     const response = await axios.post(
-      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         contents: [
           {
@@ -73,23 +73,16 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
             ]
           }
         ],
-        safetySettings: [
-          {
-            category: "HARM_CATEGORY_DANGEROUS",
-            threshold: "BLOCK_NONE"
-          }
-        ],
         generationConfig: {
           temperature: 0.7,
-          topK: 1,
-          topP: 1,
+          topK: 40,
+          topP: 0.95,
           maxOutputTokens: 2048,
         }
       },
       {
         headers: {
-          'Content-Type': 'application/json',
-          'x-goog-api-key': apiKey
+          'Content-Type': 'application/json'
         }
       }
     );
