@@ -7,8 +7,8 @@ const cors = require('cors');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-if (!process.env.OPENAI_API_KEY) {
-  console.warn('Aviso: OPENAI_API_KEY não configurada. O endpoint /api/parecer retornará erro.');
+if (!process.env.GEMINI_API_KEY) {
+  console.warn('Aviso: GEMINI_API_KEY não configurada. O endpoint /api/parecer retornará erro.');
 }
 
 // Middleware para ler JSON
@@ -25,13 +25,13 @@ app.post('/api/parecer', async (req, res) => {
   if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    return res.status(500).json({ error: 'OPENAI_API_KEY não configurada.' });
+    return res.status(500).json({ error: 'GEMINI_API_KEY não configurada.' });
   }
 
   try {
-    // Montar prompt para a OpenAI
+    // Montar prompt para o Gemini
     const prompt = `
 Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo detalhado para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, referente ao ano letivo de ${anoLetivo}. A data do parecer é ${data}. Considere as seguintes observações: ${apoio}
 
@@ -62,29 +62,43 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
     `;
 
     const response = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
+      'https://generativelanguage.googleapis.com/v1beta/models/gemini-pro:generateContent',
       {
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
-          { role: 'user', content: prompt }
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt
+              }
+            ]
+          }
         ],
-        max_tokens: 2048,
-        temperature: 0.7
+        safetySettings: [
+          {
+            category: "HARM_CATEGORY_DANGEROUS",
+            threshold: "BLOCK_NONE"
+          }
+        ],
+        generationConfig: {
+          temperature: 0.7,
+          topK: 1,
+          topP: 1,
+          maxOutputTokens: 2048,
+        }
       },
       {
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'x-goog-api-key': apiKey
         }
       }
     );
 
-    const parecer = response.data.choices[0].message.content.trim();
+    const parecer = response.data.candidates[0].content.parts[0].text.trim();
     res.json({ parecer });
   } catch (error) {
-    console.error('Erro ao chamar a OpenAI:', error.response?.data || error.message);
-    res.status(500).json({ error: 'Erro ao gerar parecer. Verifique sua chave da OpenAI e tente novamente.' });
+    console.error('Erro ao chamar o Gemini:', error.response?.data || error.message);
+    res.status(500).json({ error: 'Erro ao gerar parecer. Verifique sua chave do Gemini e tente novamente.' });
   }
 });
 
