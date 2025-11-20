@@ -25,8 +25,8 @@ app.post('/api/parecer', async (req, res) => {
   if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio || !modelo) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
-  // Validação do modelo contra uma whitelist
-  const allowedModelos = ['gemini-1.5-flash', 'gemini-pro'];
+  // Validação do parâmetro modelo
+  const allowedModelos = ['modelo1', 'modelo2', 'modelo3']; // Substitua pelos nomes reais dos modelos permitidos
   if (!allowedModelos.includes(modelo)) {
     return res.status(400).json({ error: 'Modelo inválido.' });
   }
