@@ -1,14 +1,14 @@
 # Parecer Descritivo LDB
 
-Gere pareceres descritivos para alunos conforme a LDB, usando a API do ChatGPT/OpenAI.
+Gere pareceres descritivos para alunos conforme a LDB, usando a API do Gemini.
 
 ## Como usar localmente
 
 1. **Clone ou copie este projeto para sua máquina.**
 
-2. **Configure a chave da OpenAI:**
+2. **Configure a chave do Gemini:**
     Renomeie o arquivo `.env.example` para `.env`.
-    Insira sua chave da OpenAI em `OPENAI_API_KEY`.
+    Insira sua chave do Gemini em `GEMINI_API_KEY`.
 
 3. **Instale as dependências:**
    ```bash
@@ -38,7 +38,7 @@ como um app independente e até mesmo offline.
 1. **Suba este projeto para um repositório no GitHub, GitLab ou Bitbucket.**
 2. **Acesse [https://vercel.com/import](https://vercel.com/import) e conecte seu repositório.**
 3. **No painel da Vercel, adicione a variável de ambiente:**
-    `OPENAI_API_KEY` com sua chave da OpenAI.
+    `GEMINI_API_KEY` com sua chave do Gemini.
 4. **Deploy!**
     O frontend será servido automaticamente a partir da pasta `public/`.
     O endpoint `/api/parecer` funcionará como uma serverless function.
@@ -48,13 +48,13 @@ como um app independente e até mesmo offline.
 
 ## Estrutura
 
- `server.js`: Backend Node.js/Express, faz a ponte com a API da OpenAI.
+ `server.js`: Backend Node.js/Express, faz a ponte com a API do Gemini.
  `public/`: Frontend (HTML, CSS, JS).
- `.env.example`: Exemplo de configuração da chave da OpenAI.
+ `.env.example`: Exemplo de configuração da chave do Gemini.
 
 ## Observações
 
- Sua chave da OpenAI **NUNCA** deve ser exposta no frontend.
+ Sua chave do Gemini **NUNCA** deve ser exposta no frontend.
  O texto gerado é apenas uma sugestão e deve ser revisado pela professora antes de ser utilizado oficialmente.
 
 
