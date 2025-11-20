@@ -25,11 +25,6 @@ app.post('/api/parecer', async (req, res) => {
   if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio || !modelo) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
-  // Validação do modelo contra uma whitelist
-  const allowedModelos = ['gemini-1.5-flash', 'gemini-pro'];
-  if (!allowedModelos.includes(modelo)) {
-    return res.status(400).json({ error: 'Modelo inválido.' });
-  }
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'GEMINI_API_KEY não configurada.' });
