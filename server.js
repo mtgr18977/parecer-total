@@ -21,9 +21,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Endpoint para gerar parecer
 app.post('/api/parecer', async (req, res) => {
-  const { nome, turma, escola, professora, turno, data, anoLetivo, apoio } = req.body;
-  if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
+  const { nome, turma, escola, professora, turno, data, anoLetivo, apoio, modelo } = req.body;
+  if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio || !modelo) {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
+  }
+  // Validação do modelo contra uma whitelist
+  const allowedModelos = ['gemini-1.5-flash', 'gemini-pro'];
+  if (!allowedModelos.includes(modelo)) {
+    return res.status(400).json({ error: 'Modelo inválido.' });
   }
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -62,7 +67,7 @@ Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, esco
     `;
 
     const response = await axios.post(
-      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
+      `https://generativelanguage.googleapis.com/v1beta/models/${modelo}:generateContent?key=${apiKey}`,
       {
         contents: [
           {
