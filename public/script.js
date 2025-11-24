@@ -11,6 +11,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
   const data = document.getElementById('data').value;
   const anoLetivo = document.getElementById('ano-letivo').value.trim();
   const apoio = document.getElementById('apoio').value.trim();
+  const modelo = document.getElementById('modelo').value;
   const resultadoDiv = document.getElementById('resultado');
 
   resultadoDiv.innerHTML = '<p>Gerando parecer, aguarde...</p>';
@@ -23,7 +24,7 @@ document.getElementById('parecerform').addEventListener('submit', async function
     const response = await fetch('/api/parecer', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ nome, turma, escola, professora, turno, data, anoLetivo, apoio })
+      body: JSON.stringify({ nome, turma, escola, professora, turno, data, anoLetivo, apoio, modelo })
     });
 
     const resposta = await response.json();

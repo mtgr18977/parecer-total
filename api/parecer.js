@@ -10,39 +10,75 @@ module.exports = async (req, res) => {
     return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
 
-  const apiKey = process.env.OPENAI_API_KEY;
+  const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     return res.status(500).json({ error: 'OPENAI_API_KEY não configurada.' });
   }
 
   try {
     const prompt = `
-Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, no ano letivo de ${anoLetivo}. A data do parecer é ${data}. Considere as seguintes observações: ${apoio}
-O texto deve ser formal, objetivo, e adequado para relatórios escolares.
+Você é um(a) professor(a) do ensino fundamental no Brasil. Escreva um parecer descritivo detalhado para o(a) aluno(a) ${nome}, da turma ${turma}, da escola ${escola}, turno ${turno}, professora regente ${professora}, referente ao ano letivo de ${anoLetivo}. A data do parecer é ${data}. Considere as seguintes observações: ${apoio}
+
+Siga rigorosamente o modelo abaixo, que é um exemplo real de parecer feito por uma professora. Estruture o texto conforme os tópicos do exemplo, utilize linguagem formal, detalhada, e inclua recomendações à família e sugestões de intervenção, sempre que possível. Personalize o texto conforme as informações fornecidas.
+
+--- EXEMPLO DE PARECER ---
+PARECER DESCRITIVO – 1º TRIMESTRE – ANO LETIVO DE 2025
+Aluna: Larissa Martins da Silva
+Turma: 21 – 2º Ano do Ensino Fundamental I
+Turno: Tarde
+Escola: Presidente Arthur da Costa e Silva
+Professora regente: Silvana Maria Pilotti Duarte 
+
+Querida família,
+Através deste parecer, compartilho com vocês um pouco sobre o desenvolvimento da nossa querida Larissa ao longo deste período letivo.
+Larissa é uma criança encantadora, dedicada, participativa, que demonstra muita vontade de aprender, se desenvolver e interagir com seus colegas e com os professores.
+
+No campo cognitivo, Larissa realiza com segurança atividades de pareamento de cores, formas, palavras e frases com imagens, além de já reconhecer as vogais, demonstrando progresso no processo de alfabetização. Na matemática, já é capaz de contar oralmente até 5 e reconhece os numerais até 3, o que representa um avanço muito importante para seu desenvolvimento, considerando suas necessidades e seu ritmo de aprendizagem.
+
+Sabemos e reconhecemos o empenho, o carinho e a dedicação da família no acompanhamento e no desenvolvimento da Larissa. Contudo, entendemos ser importante reforçar algumas recomendações, que visam potencializar ainda mais seu desenvolvimento, tanto na escola quanto no ambiente familiar:
+• Estimular a comunicação oral: continuar incentivando Larissa a se expressar por meio de conversas, perguntas, músicas, histórias e brincadeiras que favoreçam o uso da linguagem oral.
+• Ampliar o trabalho com numerais: estimular a contagem e o reconhecimento dos números, utilizando situações do dia a dia, como contar brinquedos, alimentos, passos ou objetos, sempre reforçando, de forma lúdica, os numerais já reconhecidos e introduzindo gradativamente os demais.
+• Fortalecer a coordenação motora: propor atividades como pintura com materiais adaptados (lápis grossos, pincéis com suporte), rasgar papel, amassar massinha, jogos de encaixe e atividades sensoriais, que contribuem diretamente para o desenvolvimento motor e cognitivo.
+
+--- FIM DO EXEMPLO ---
+
+Siga o padrão acima, adaptando para o(a) aluno(a) ${nome}, turma ${turma}, escola ${escola}, ano letivo ${anoLetivo} e data ${data}, considerando as observações: ${apoio}. O texto deve ser formal, detalhado, estruturado e incluir recomendações à família. Continue até o final do parecer, sem cortar o texto.
     `;
 
     const response = await axios.post(
-      'https://api.openai.com/v1/chat/completions',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
-        model: 'gpt-3.5-turbo',
-        messages: [
-          { role: 'system', content: 'Você é um(a) professor(a) especialista em pareceres descritivos conforme a LDB.' },
-          { role: 'user', content: prompt }
+        contents: [
+          {
+            parts: [
+              {
+                text: prompt
+              }
+            ]
+          }
         ],
-        max_tokens: 2048,
-        temperature: 0.7
+        generationConfig: {
+          temperature: 0.7,
+          topK: 40,
+          topP: 0.95,
+          maxOutputTokens: 2048,
+        }
       },
       {
         headers: {
-          'Authorization': `Bearer ${apiKey}`,
           'Content-Type': 'application/json'
         }
       }
     );
 
-    const parecer = response.data.choices[0].message.content.trim();
+    const parecer = response.data.candidates[0].content.parts[0].text.trim();
     res.status(200).json({ parecer });
   } catch (error) {
-    res.status(500).json({ error: 'Erro ao gerar parecer. Verifique sua chave da OpenAI e tente novamente.' });
+    console.error('Erro detalhado:', JSON.stringify(error.response?.data || error.message, null, 2));
+    const errorMsg = error.response?.data?.error?.message || error.message || 'Erro desconhecido';
+    res.status(500).json({ 
+      error: 'Erro ao gerar parecer. Verifique sua chave do Gemini e tente novamente.',
+      details: errorMsg
+    });
   }
 };

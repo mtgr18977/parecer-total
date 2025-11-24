@@ -134,3 +134,4 @@ dist
 .yarn/buildstate.yml
 .yarn/installstate.gz
 .pnp.*
+.vercel
