@@ -29,7 +29,6 @@ ion-header {
 ion-toolbar {
   --background: var(--primary-color);
   --color: #fff;
-  padding: 0 10px;
 }
 
 ion-title {
