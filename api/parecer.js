@@ -2,20 +2,17 @@ const axios = require('axios');
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
-    res.status(405).json({ error: 'Método não permitido' });
-    return;
+    return res.status(405).json({ error: 'Método não permitido' });
   }
 
   const { nome, turma, escola, professora, turno, data, anoLetivo, apoio } = req.body;
   if (!nome || !turma || !escola || !professora || !turno || !data || !anoLetivo || !apoio) {
-    res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
-    return;
+    return res.status(400).json({ error: 'Todos os campos são obrigatórios.' });
   }
 
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
-    res.status(500).json({ error: 'GEMINI_API_KEY não configurada.' });
-    return;
+    return res.status(500).json({ error: 'OPENAI_API_KEY não configurada.' });
   }
 
   try {
